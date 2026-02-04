@@ -44,11 +44,10 @@ RUN chmod +x create_rpm.sh && ./create_rpm.sh cuebot "$(cat VERSION)"
 # -----------------
 # RUN
 # -----------------
-FROM amazoncorretto:17-alpine-jdk
-# FROM eclipse-temurin:17-jdk-bullseye
+FROM eclipse-temurin:17-jdk-jammy
 
 # Install curl for healthchecking
-RUN apk add --no-cache curl
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 # Healthcheck that returns exit 0 when succesful
 HEALTHCHECK --interval=10s --start-period=20s --timeout=5s CMD curl --http2-prior-knowledge -H 'Content-Type: application/grpc' -H 'te: trailers' --data '' http://localhost:8443/cue.CueInterface/GetSystemStats
 

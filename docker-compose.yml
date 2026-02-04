@@ -36,7 +36,7 @@ services:
     links:
       - db
     ports:
-      - "8445:8443"
+      - "8443:8443"
     depends_on:
       db:
         condition: service_started
